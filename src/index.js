@@ -1,14 +1,6 @@
 import { duration, utc } from 'moment';
-import format from 'mathjs/lib/function/string/format';
-import number from 'mathjs/lib/type/number';
-import floor from 'mathjs/lib/function/arithmetic/floor';
-import round from 'mathjs/lib/function/arithmetic/round';
-import abs from 'mathjs/lib/function/arithmetic/abs';
-
-import includes from 'lodash/includes';
-import filter from 'lodash/filter';
-import last from 'lodash/last';
-import intersection from 'lodash/intersection';
+import { format, number, floor, round, abs } from 'mathjs';
+import { includes, filter, last, intersection } from 'lodash';
 
 const FormatDurationOutputIntervals = ['year', 'month', 'week', 'day', 'hour', 'minute', 'second'];
 const generateFormattedDurationFromTimestamp = (durationTimestampInput, formatting) => {
