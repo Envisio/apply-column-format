@@ -1,6 +1,10 @@
 import { duration, utc } from 'moment';
-import { format, number, floor, round, abs } from 'mathjs';
-import { includes, filter, last, intersection } from 'lodash';
+import {
+  format, number, floor, round, abs,
+} from 'mathjs';
+import {
+  includes, filter, last, intersection,
+} from 'lodash';
 
 const FormatDurationOutputIntervals = ['year', 'month', 'week', 'day', 'hour', 'minute', 'second'];
 const generateFormattedDurationFromTimestamp = (durationTimestampInput, formatting) => {
@@ -50,6 +54,17 @@ const generateFormattedDurationFromTimestamp = (durationTimestampInput, formatti
   }, initVal);
   return positive ? outputResult.results.join(' ') : `-(${outputResult.results.join(' ')})`;
 };
+const generateFormattedTime = (selectedFormat, input) => {
+  const inputAsInt = parseInt(input, 10);
+  const momentObj = utc(inputAsInt, 'x');
+  if (!momentObj.isValid()) {
+    return input;
+  }
+  if (selectedFormat === '12HR') {
+    return momentObj.format('hh:mm:ss a');
+  }
+  return momentObj.format('HH:mm:ss');
+};
 const insertThousandSeparators = (value, separator) => {
   const parts = value.toString().split('.');
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, separator);
@@ -58,7 +73,7 @@ const insertThousandSeparators = (value, separator) => {
 const formatNumber = (value, formatting, columnType) => {
   let formattedNumber;
   const {
-    units, decimalPlaces, thousandSeparator, interval,
+    units, decimalPlaces, thousandSeparator, interval, selectedFormat,
   } = formatting;
   switch (columnType) {
     case 'FORMULA_DURATION':
@@ -66,6 +81,9 @@ const formatNumber = (value, formatting, columnType) => {
       break;
     case 'DURATION':
       formattedNumber = `${value} ${interval[0]}${value > 1 ? 's' : ''}`;
+      break;
+    case 'TIME':
+      formattedNumber = generateFormattedTime(selectedFormat, value);
       break;
     default:
       try {
