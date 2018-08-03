@@ -1,6 +1,10 @@
 import { duration, utc } from 'moment';
-import { format, number, floor, round, abs } from 'mathjs';
-import { includes, filter, last, intersection } from 'lodash';
+import {
+  format, number, floor, round, abs,
+} from 'mathjs';
+import {
+  includes, filter, last, intersection,
+} from 'lodash';
 
 const FormatDurationOutputIntervals = ['year', 'month', 'week', 'day', 'hour', 'minute', 'second'];
 const generateFormattedDurationFromTimestamp = (durationTimestampInput, formatting) => {
@@ -52,7 +56,7 @@ const generateFormattedDurationFromTimestamp = (durationTimestampInput, formatti
 };
 const generateFormattedTime = (selectedFormat, input) => {
   const inputAsInt = parseInt(input, 10);
-  const momentObj = moment.utc(inputAsInt, 'x');
+  const momentObj = utc(inputAsInt, 'x');
   if (!momentObj.isValid()) {
     return input;
   }
