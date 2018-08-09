@@ -3,7 +3,7 @@ import {
   format, number, floor, round, abs,
 } from 'mathjs';
 import {
-  includes, filter, last, intersection,
+  includes, filter, last, intersection, isEmpty,
 } from 'lodash';
 
 const FormatDurationOutputIntervals = ['year', 'month', 'week', 'day', 'hour', 'minute', 'second'];
@@ -86,17 +86,19 @@ const formatNumber = (value, formatting, columnType) => {
       formattedNumber = generateFormattedTime(selectedFormat, value);
       break;
     default:
-      try {
-        const roundedValue = decimalPlaces > -1 ? format(number(value), {
-          notation: 'fixed',
-          precision: decimalPlaces,
-        }) : value;
-        const valueWithSeperators = thousandSeparator.length
-          ? roundedValue
-          : insertThousandSeparators(roundedValue, thousandSeparator);
-        formattedNumber = `${units.prefix}${valueWithSeperators}${units.postfix}`;
-      } catch (e) {
-        formattedNumber = value;
+      if (value !== 'ERROR') {
+        try {
+          const roundedValue = decimalPlaces > -1 ? format(number(value), {
+            notation: 'fixed',
+            precision: decimalPlaces,
+          }) : value;
+          const valueWithSeperators = isEmpty(thousandSeparator)
+            ? roundedValue
+            : insertThousandSeparators(roundedValue, thousandSeparator);
+          formattedNumber = `${units.prefix}${valueWithSeperators}${units.postfix}`;
+        } catch (e) {
+          formattedNumber = value;
+        }
       }
       break;
   }
