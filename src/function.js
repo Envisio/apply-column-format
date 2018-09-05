@@ -82,7 +82,8 @@ const formatNumber = (value, formatting, columnType) => {
       formattedNumber = generateFormattedDurationFromTimestamp(value, formatting);
       break;
     case 'DURATION':
-      formattedNumber = `${value} ${interval[0]}${value > 1 ? 's' : ''}`;
+      const formattingOptions = { notation: 'fixed', precision: value - Math.floor(value) !== 0 ? 2 : 0 };
+      formattedNumber = `${format(number(value), formattingOptions)} ${interval[0]}${value > 1 ? 's' : ''}`;
       break;
     case 'TIME':
       formattedNumber = generateFormattedTime(selectedFormat, value);
