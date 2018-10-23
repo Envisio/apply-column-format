@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "babel-preset-react": "^6.24.1",
     "lodash": "^4.17.10",
     "mathjs": "^5.0.4",
     "moment": "^2.22.2"
@@ -15,7 +16,7 @@
     "webpack-cli": "^3.0.8"
   },
   "name": "apply-column-format",
-  "version": "0.0.7",
+  "version": "0.0.9",
   "main": "./lib/index.js",
   "repository": "https://github.com/Envisio/apply-column-format.git",
   "author": "s@zhso.net",

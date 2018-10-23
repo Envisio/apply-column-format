@@ -80,7 +80,8 @@ const formatNumber = (value, formatting, columnType) => {
       formattedNumber = generateFormattedDurationFromTimestamp(value, formatting);
       break;
     case 'DURATION':
-      formattedNumber = `${value} ${interval[0]}${value > 1 ? 's' : ''}`;
+      const formattingOptions = { notation: 'fixed', precision: value - Math.floor(value) !== 0 ? 2 : 0 };
+      formattedNumber = `${format(number(value), formattingOptions)} ${interval[0]}${value > 1 ? 's' : ''}`;
       break;
     case 'TIME':
       formattedNumber = generateFormattedTime(selectedFormat, value);
@@ -104,7 +105,7 @@ const formatNumber = (value, formatting, columnType) => {
   }
   return formattedNumber;
 };
-export default (value, { columnType, formatting }) => {
+export default (value, { columnType, formatting }, formattingOptions = {}) => {
   let columnValue;
   if (value === '') {
     columnValue = '';
@@ -127,7 +128,8 @@ export default (value, { columnType, formatting }) => {
         columnValue = value;
         break;
       default:
-        columnValue = formatNumber(value, formatting, columnType);
+        const newFormatting = { ...formatting, ...formattingOptions };
+        columnValue = formatNumber(value, newFormatting, columnType);
         break;
     }
   }
