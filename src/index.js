@@ -105,7 +105,7 @@ const formatNumber = (value, formatting, columnType) => {
   }
   return formattedNumber;
 };
-export default (value, { columnType, formatting }) => {
+export default (value, { columnType, formatting }, formattingOptions = {}) => {
   let columnValue;
   if (value === '') {
     columnValue = '';
@@ -128,7 +128,8 @@ export default (value, { columnType, formatting }) => {
         columnValue = value;
         break;
       default:
-        columnValue = formatNumber(value, formatting, columnType);
+        const newFormatting = { ...formatting, ...formattingOptions };
+        columnValue = formatNumber(value, newFormatting, columnType);
         break;
     }
   }

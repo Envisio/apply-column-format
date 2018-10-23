@@ -110,7 +110,7 @@ const formatNumber = (value, formatting, columnType) => {
 Envisio.applyColumnFormat = Envisio.applyColumnFormat || function (value, {
   columnType,
   formatting,
-}) {
+}, formattingOptions = {}) {
   let columnValue;
   if (value === '') {
     columnValue = '';
@@ -133,7 +133,8 @@ Envisio.applyColumnFormat = Envisio.applyColumnFormat || function (value, {
         columnValue = value;
         break;
       default:
-        columnValue = formatNumber(value, formatting, columnType);
+        const newFormatting = { ...formatting, ...formattingOptions };
+        columnValue = formatNumber(value, newFormatting, columnType);
         break;
     }
   }
