@@ -16,7 +16,7 @@
     "webpack-cli": "^3.0.8"
   },
   "name": "apply-column-format",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "main": "./lib/index.js",
   "repository": "https://github.com/Envisio/apply-column-format.git",
   "author": "s@zhso.net",
