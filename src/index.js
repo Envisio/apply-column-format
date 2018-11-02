@@ -89,10 +89,14 @@ const formatNumber = (value, formatting, columnType) => {
     default:
       if (value !== 'ERROR') {
         try {
-          const roundedValue = decimalPlaces > -1 ? format(number(value), {
+          let roundedValue = decimalPlaces > -1 ? format(number(value), {
             notation: 'fixed',
             precision: decimalPlaces,
           }) : value;
+          // precision: 0 does return a properly formatted number so use Math.round to fix it
+          if (decimalPlaces === 0) {
+            roundedValue = Math.round(roundedValue);
+          }
           const valueWithSeperators = isEmpty(thousandSeparator)
             ? roundedValue
             : insertThousandSeparators(roundedValue, thousandSeparator);
